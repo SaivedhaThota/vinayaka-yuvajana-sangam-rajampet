@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gallery - Vinayaka Yuvajana Sangam Rajampet</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        #gallery {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .photo-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .photo-card img {
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .delete-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .delete-btn:hover {
+            background: darkred;
+        }
+
+        /* Floating chatbot container */
+        #chatbot {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          width: 320px;
+          font-family: Arial, sans-serif;
+          border-radius: 15px;
+          overflow: hidden;
+          z-index: 9999;
+          text-align: center;
+        }
+
+        /* 🌸 Uiverse.io Flower Button Style */
+        .btn {
+          height: 4em;
+          width: 12em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: transparent;
+          border: 0px solid black;
+          cursor: pointer;
+        }
+        .wrapper {
+          height: 2em;
+          width: 8em;
+          position: relative;
+          background: transparent;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .text {
+          font-size: 17px;
+          z-index: 1;
+          color: #000;
+          padding: 4px 12px;
+          border-radius: 4px;
+          background: rgba(255, 255, 255, 0.7);
+          transition: all 0.5s ease;
+        }
+        .flower {
+          display: grid;
+          grid-template-columns: 1em 1em;
+          position: absolute;
+          transition: grid-template-columns 0.8s ease;
+        }
+        .flower1 { top: -12px; left: -13px; transform: rotate(5deg); }
+        .flower2 { bottom: -5px; left: 8px; transform: rotate(35deg); }
+        .flower3 { bottom: -15px; transform: rotate(0deg); }
+        .flower4 { top: -14px; transform: rotate(15deg); }
+        .flower5 { right: 11px; top: -3px; transform: rotate(25deg); }
+        .flower6 { right: -15px; bottom: -15px; transform: rotate(30deg); }
+        .petal {
+          height: 1em;
+          width: 1em;
+          border-radius: 40% 70% / 7% 90%;
+          background: linear-gradient(#E6298A, #ef91c1);
+          border: 0.5px solid #ef91c1;
+          z-index: 0;
+          transition: width 0.8s ease, height 0.8s ease;
+        }
+        .two { transform: rotate(90deg); }
+        .three { transform: rotate(270deg); }
+        .four { transform: rotate(180deg); }
+
+        .btn:hover .flower { grid-template-columns: 1.5em 1.5em; }
+        .btn:hover .flower .petal { width: 1.5em; height: 1.5em; }
+        .btn:hover .text { background: rgba(255, 255, 255, 0.4); }
+
+        /* Chat body */
+        #chatBody {
+          padding: 10px;
+          background: #f9f9f9;
+          max-height: 300px;
+          overflow-y: auto;
+          border: 1px solid #ccc;
+          border-top: none;
+        }
+        #chatInput {
+          width: 100%;
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          margin-top: 8px;
+          outline: none;
+        }
+        .user-msg {
+          text-align: right;
+          background: #d1e7ff;
+          margin: 5px;
+          padding: 6px 10px;
+          border-radius: 10px;
+          display: inline-block;
+        }
+        .bot-msg {
+          text-align: left;
+          background: #f0f0f0;
+          margin: 5px;
+          padding: 6px 10px;
+          border-radius: 10px;
+          display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Gallery</h1>
+    <nav>
+        <a href="index.html"><i class="fa fa-home"></i><br>Home</a>
+        <a href="location.html"><i class="fa fa-map-marker-alt"></i><br>Location</a>
+        <a href="livevideo.html"><i class="fa fa-video"></i><br>Live</a>
+        <a href="photos.html"><i class="fa fa-image"></i><br>Gallery</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Upload your photo with Ganesha</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="photoInput" name="photo" accept="image/*" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <div id="gallery"></div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Vinayaka Yojana Sangam RAJAMPET</p>
+</footer>
+
+<!-- Chatbot -->
+<div id="chatbot">
+    <button id="chatHeader" class="btn" onclick="toggleChat()">
+        <div class="wrapper">
+            <p class="text">💬 Chat with us</p>
+            <div class="flower flower1"><div class="petal one"></div><div class="petal two"></div><div class="petal three"></div><div class="petal four"></div></div>
+            <div class="flower flower2"><div class="petal one"></div><div class="petal two"></div><div class="petal three"></div><div class="petal four"></div></div>
+            <div class="flower flower3"><div class="petal one"></div><div class="petal two"></div><div class="petal three"></div><div class="petal four"></div></div>
+            <div class="flower flower4"><div class="petal one"></div><div class="petal two"></div><div class="petal three"></div><div class="petal four"></div></div>
+            <div class="flower flower5"><div class="petal one"></div><div class="petal two"></div><div class="petal three"></div><div class="petal four"></div></div>
+            <div class="flower flower6"><div class="petal one"></div><div class="petal two"></div><div class="petal three"></div><div class="petal four"></div></div>
+        </div>
+    </button>
+
+    <div id="chatBody" style="display:none;">
+        <div id="chatMessages"></div>
+        <input type="text" id="chatInput" placeholder="Type your question..." 
+               onkeydown="if(event.key==='Enter')sendMessage()">
+    </div>
+</div>
+<script>
+// --- Chatbot JS ---
+
+const chatbotResponses = {
+    "hi": "Hello! Welcome to Vinayaka Yojana Sangam RAJAMPET 🙏",
+    "hello": "Hi there! How can I help you today?",
+    "festival": "This year's Ganesh Utsav starts on 27th August 2025 🎉",
+    "location": "We are located at Vinayaka Temple, Rajampet, Sangareddy, Telangana 📍",
+    "pooja": "Pooja timings start from 7:30 PM 🕉️",
+    "prasadam": "Prasadam is offered after the pooja 🍚",
+    "nimarjan": "Nimarjan is on 4th September, from 7:00 PM 🪔",
+    "default": "Sorry, I don’t have an answer for that. Please contact our team."
+};
+function toggleChat() {
+    let body = document.getElementById('chatBody');
+    if (body.style.display === '' || body.style.display === 'none') {
+        body.style.display = 'block';
+    } else {
+        body.style.display = 'none';
+    }
+}
+function sendMessage() {
+    let input = document.getElementById('chatInput');
+    let msg = input.value.trim();
+    if (!msg) return;
+    let chatMessages = document.getElementById('chatMessages');
+    chatMessages.innerHTML += `<div class="user-msg">${msg}</div>`;
+    let reply = chatbotResponses["default"];
+    let words = msg.toLowerCase().split(" ");
+    for (let word of words) {
+        if (chatbotResponses[word]) {
+            reply = chatbotResponses[word];
+            break;
+        }
+    }
+    setTimeout(() => {
+        chatMessages.innerHTML += `<div class="bot-msg">${reply}</div>`;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 500);
+    input.value = "";
+}
+
+// --- Gallery JS ---
+const form = document.getElementById("uploadForm");
+const input = document.getElementById("photoInput");
+const gallery = document.getElementById("gallery");
+let db;
+const request = indexedDB.open("PhotoGalleryDB", 1);
+request.onupgradeneeded = function(event) {
+    db = event.target.result;
+    if (!db.objectStoreNames.contains("photos")) {
+        db.createObjectStore("photos", { autoIncrement: true });
+    }
+};
+request.onsuccess = function(event) {
+    db = event.target.result;
+    renderGallery();
+};
+request.onerror = function() {
+    console.error("IndexedDB error");
+};
+function savePhoto(dataUrl) {
+    const tx = db.transaction("photos", "readwrite");
+    const store = tx.objectStore("photos");
+    store.add(dataUrl);
+}
+function getAllPhotos(callback) {
+    const tx = db.transaction("photos", "readonly");
+    const store = tx.objectStore("photos");
+    const request = store.getAll();
+    request.onsuccess = function() {
+        callback(request.result);
+    };
+}
+function deletePhoto(index) {
+    const tx = db.transaction("photos", "readwrite");
+    const store = tx.objectStore("photos");
+    const request = store.getAllKeys();
+    request.onsuccess = function() {
+        const keys = request.result;
+        store.delete(keys[index]);
+        renderGallery();
+    };
+}
+function renderPhotoCard(dataUrl, index) {
+    const photoCard = document.createElement("div");
+    photoCard.classList.add("photo-card");
+    const img = document.createElement("img");
+    img.src = dataUrl;
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerText = "Delete";
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.onclick = function() {
+        deletePhoto(index);
+    };
+    photoCard.appendChild(img);
+    photoCard.appendChild(deleteBtn);
+    gallery.appendChild(photoCard);
+}
+function renderGallery() {
+    gallery.innerHTML = "";
+    getAllPhotos((photos) => {
+        photos.forEach((dataUrl, idx) => renderPhotoCard(dataUrl, idx));
+    });
+}
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const file = input.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            savePhoto(event.target.result);
+            renderGallery();
+        }
+        reader.readAsDataURL(file);
+    }
+    form.reset();
+});
+</script>
+
+<script src="chatbot.js"></script>
+<script>
+
+
+// Upload new photo
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const file = input.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("photo", file);
+
+  await fetch("/upload", { method: "POST", body: formData });
+  form.reset();
+  loadGallery();
+});
+
+loadGallery();
+</script>
+</body>
+</html>

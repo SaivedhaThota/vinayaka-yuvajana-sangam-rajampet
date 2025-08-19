@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Video - Vinayaka Yuvajana Sangam Rajampet</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .live-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .live-container iframe {
+            flex: 1;
+            min-width: 350px;
+            max-width: 720px;
+            aspect-ratio: 16/9;
+        }
+        p.stream-info {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: red;
+        }
+    </style>
+  </head>
+<body>
+<header>
+    <h1>Live Video</h1>
+    <nav>
+        <a href="index.html"><i class="fa fa-home"></i><br>Home</a>
+        <a href="location.html"><i class="fa fa-map-marker-alt"></i><br>Location</a>
+        <a href="livevideo.html"><i class="fa fa-video"></i><br>Live</a>
+        <a href="photos.html"><i class="fa fa-image"></i><br>Gallery</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Watch Live Ganesh Utsav</h2>
+
+    <!-- YouTube Live Embed -->
+    <div class="video-container">
+        <iframe width="150%" height="450"
+            src="https://www.youtube.com/embed/lIfpNlEZ4G8"
+            allow="autoplay; encrypted-media"
+            title="Live Video"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+    </div>
+    
+</main>
+
+<footer>
+    <p>&copy; 2025 Vinayaka Yojana Sangam RAJAMPET</p>
+</footer>
+
+<!-- Chatbot -->
+<div id="chatbot">
+    <button id="chatHeader" class="btn" onclick="toggleChat()">
+        <div class="wrapper">
+            <p class="text">💬 Chat with us</p>
+
+            <div class="flower flower1">
+              <div class="petal one"></div>
+              <div class="petal two"></div>
+              <div class="petal three"></div>
+              <div class="petal four"></div>
+            </div>
+            <div class="flower flower2">
+              <div class="petal one"></div>
+              <div class="petal two"></div>
+              <div class="petal three"></div>
+              <div class="petal four"></div>
+            </div>
+            <div class="flower flower3">
+              <div class="petal one"></div>
+              <div class="petal two"></div>
+              <div class="petal three"></div>
+              <div class="petal four"></div>
+            </div>
+            <div class="flower flower4">
+              <div class="petal one"></div>
+              <div class="petal two"></div>
+              <div class="petal three"></div>
+              <div class="petal four"></div>
+            </div>
+            <div class="flower flower5">
+              <div class="petal one"></div>
+              <div class="petal two"></div>
+              <div class="petal three"></div>
+              <div class="petal four"></div>
+            </div>
+            <div class="flower flower6">
+              <div class="petal one"></div>
+              <div class="petal two"></div>
+              <div class="petal three"></div>
+              <div class="petal four"></div>
+            </div>
+        </div>
+    </button>
+
+    <div id="chatBody" style="display:none;">
+        <div id="chatMessages"></div>
+        <input type="text" id="chatInput" placeholder="Type your question..." 
+               onkeydown="if(event.key==='Enter')sendMessage()">
+    </div>
+</div>
+
+<style>
+/* Floating chatbot container */
+#chatbot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  font-family: Arial, sans-serif;
+  border-radius: 15px;
+  overflow: hidden;
+  z-index: 9999;
+  text-align: center;
+}
+
+/* 🌸 Uiverse.io Button Flower Style */
+.btn {
+  height: 4em;
+  width: 12em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0px solid black;
+  cursor: pointer;
+}
+
+.wrapper {
+  height: 2em;
+  width: 8em;
+  position: relative;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  font-size: 17px;
+  z-index: 1;
+  color: #000;
+  padding: 4px 12px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.7);
+  transition: all 0.5s ease;
+}
+
+.flower {
+  display: grid;
+  grid-template-columns: 1em 1em;
+  position: absolute;
+  transition: grid-template-columns 0.8s ease;
+}
+
+.flower1 { top: -12px; left: -13px; transform: rotate(5deg); }
+.flower2 { bottom: -5px; left: 8px; transform: rotate(35deg); }
+.flower3 { bottom: -15px; transform: rotate(0deg); }
+.flower4 { top: -14px; transform: rotate(15deg); }
+.flower5 { right: 11px; top: -3px; transform: rotate(25deg); }
+.flower6 { right: -15px; bottom: -15px; transform: rotate(30deg); }
+
+.petal {
+  height: 1em;
+  width: 1em;
+  border-radius: 40% 70% / 7% 90%;
+  background: linear-gradient(#E6298A, #ef91c1);
+  border: 0.5px solid #ef91c1;
+  z-index: 0;
+  transition: width 0.8s ease, height 0.8s ease;
+}
+
+.two { transform: rotate(90deg); }
+.three { transform: rotate(270deg); }
+.four { transform: rotate(180deg); }
+
+.btn:hover .petal {
+  background: linear-gradient(#E6298A, #ef91c1);
+  border: 0.5px solid #ef91c1;
+}
+
+.btn:hover .flower {
+  grid-template-columns: 1.5em 1.5em;
+}
+
+.btn:hover .flower .petal {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.btn:hover .text {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Petal animations */
+.btn:hover div.flower1 { animation: 15s linear infinite flower1; }
+.btn:hover div.flower2 { animation: 13s linear infinite flower2; }
+.btn:hover div.flower3 { animation: 16s linear infinite flower3; }
+.btn:hover div.flower4 { animation: 17s linear infinite flower4; }
+.btn:hover div.flower5 { animation: 20s linear infinite flower5; }
+.btn:hover div.flower6 { animation: 15s linear infinite flower6; }
+
+@keyframes flower1 { from { transform: rotate(5deg); } to { transform: rotate(365deg); } }
+@keyframes flower2 { from { transform: rotate(35deg); } to { transform: rotate(-325deg); } }
+@keyframes flower3 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes flower4 { from { transform: rotate(15deg); } to { transform: rotate(375deg); } }
+@keyframes flower5 { from { transform: rotate(25deg); } to { transform: rotate(-335deg); } }
+@keyframes flower6 { from { transform: rotate(30deg); } to { transform: rotate(390deg); } }
+
+/* Chat body */
+#chatBody {
+  padding: 10px;
+  background: #f9f9f9;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+#chatInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 8px;
+  outline: none;
+}
+</style>
+<script src="chatbot.js"></script>
+</body>
+</html>
